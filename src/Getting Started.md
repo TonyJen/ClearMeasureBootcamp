@@ -126,6 +126,7 @@ architecture have 3 main parts, Bus, IRequest and IRequestHandler.
 The main method to send request is the send method as follows.
 
 '''
+
   /**
          * Send request wrapped in IRequest interface. TResponse is the return value for this method as well as 
          * IRequest interface.
@@ -138,6 +139,7 @@ The main method to send request is the send method as follows.
 
             return result;
         }
+
 '''
 
 ## DataAccess
