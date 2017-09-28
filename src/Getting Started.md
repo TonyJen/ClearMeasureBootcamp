@@ -113,6 +113,37 @@ It also contains SingleResult and MulipleResult is of TResponse type.
 
 **Services**
 
+Services are functions that uses models to create function the application uses. Each funciton uses
+an interface and implements them. For example, IApplicationInformation is an interface and 
+ApplicationInformation implements that functionality. Another example is IexpenseReportBuilder, 
+which is implemented by ExpenseReportBuilder.
+
+**Bus Architecture**
+
+Bus architecture is the heart of how requests are done on the Expense Report application. The 
+architecture have 3 main parts, Bus, IRequest and IRequestHandler. 
+
+The main method to send request is the send method as follows.
+
+'''
+  /**
+         * Send request wrapped in IRequest interface. TResponse is the return value for this method as well as 
+         * IRequest interface.
+        */
+        public virtual TResponse Send<TResponse>(IRequest<TResponse> request)
+        {
+            var defaultHandler = GetHandler(request);
+
+            TResponse result = defaultHandler.Handle(request);
+
+            return result;
+        }
+'''
+
+## DataAccess
+
+
+
 
 
 
