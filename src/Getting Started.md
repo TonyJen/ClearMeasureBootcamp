@@ -142,9 +142,66 @@ The main method to send request is the send method as follows.
 
 ```
 
+After the request is send, the next piece of code will find the handler for the request and run the corresponding
+handler method.
+
+```C#
+
+ private RequestHandler<TResponse> GetHandler<TResponse>(IRequest<TResponse> request)
+        {
+            var handlerType = typeof(IRequestHandler<,>).MakeGenericType(request.GetType(), typeof(TResponse));
+            var wrapperType = typeof(RequestHandler<,>).MakeGenericType(request.GetType(), typeof(TResponse));
+            object handler;
+            try
+            {
+                handler = _singleInstanceFactory(handlerType);
+
+                if (handler == null)
+                    throw new InvalidOperationException("Handler was not found for request of type " + request.GetType());
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Handler was not found for request of type " + request.GetType(), e);
+            }
+            var wrapperHandler = Activator.CreateInstance(wrapperType, handler);
+            return (RequestHandler<TResponse>)wrapperHandler;
+        }
+
+private class RequestHandler<TCommand, TResult> : RequestHandler<TResult> where TCommand : IRequest<TResult>
+        {
+            private readonly IRequestHandler<TCommand, TResult> _inner;
+
+            public RequestHandler(IRequestHandler<TCommand, TResult> inner)
+            {
+                _inner = inner;
+            }
+
+            public override TResult Handle(IRequest<TResult> message)
+            {
+                return _inner.Handle((TCommand)message);
+            }
+        }
+
+```
+
+
+
+
+
+
 ## DataAccess
 
+DataAccess is where data mapping and data queries are done. 
 
+The examples given are EmployeeMap, ExpenseReportFactMap, ExpenseReportMap, ExpenseReportStatusType, ManagerMap.
+
+**Handler**
+
+There is where the Bus handler code that deals with database access is stored. Function are furthered encapsulated.
+One example is AddExpenseCommadnHandler which create and updated model and then calls ExpenseReportSaveCommandHandler
+which saves the model to the database.
+
+## Database
 
 
 
