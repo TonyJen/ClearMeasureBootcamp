@@ -251,8 +251,28 @@ properly.
 
 ## UnitTests
 
+Units tests are automatic test that test application functionality, usually at the method level.
+We are testing the core project objects. We are testing Model and Services areas. 
+
+Here is an example of a basic test:
 
 
+```C#
+
+  [Test]
+        public void PropertiesShouldInitializeProperly()
+        {
+            var employee = new Employee();
+            Assert.That(employee.Id, Is.EqualTo(Guid.Empty));
+            Assert.That(employee.UserName, Is.EqualTo(null));
+            Assert.That(employee.FirstName, Is.EqualTo(null));
+            Assert.That(employee.LastName, Is.EqualTo(null));
+            Assert.That(employee.EmailAddress, Is.EqualTo(null));
+        }
+
+
+Here, we test if a Employee object is created successfully and assert if it's values are valid.
+Each object in the Core project can be tested that way.
 
 
 
