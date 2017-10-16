@@ -4,14 +4,25 @@ Clear Measure Bootcamp Projct Preqsets
 
 To work on the Clear Measure Expense Report project you should have the following prerequisite:
 
-Basic knowledge of Visual Studio, C#, SQL, FluentNHibernate, Selenium, Onion Architecture, 
+Basic knowledge of Visual Studio, C#, MVC, SQL, FluentNHibernate, Selenium, Onion Architecture, 
 Unit testing, Razor Views, Jquery, Bootstrap.
 
 So lets get started:
 
 ## Project Overview
 
-Bootcamp project contained the following parts:
+The bootcamp project have 4 major sections:
+
+1. Core section - This section contains core project which contains the project objects 
+and services.
+
+2. Data section - This section contains DataAccess and Database projects.
+
+3. UI section - This section contains UI.DependencyResolution and UI projects.
+
+4. Test section - This section contains UnitTests, IntegrationTests, PerformanceTests, and SmokeTests.
+
+Lets look at the projects individually.
 
 1. Core Project - Contains the models, features, plugins and services. 
 
@@ -142,8 +153,8 @@ The main method to send request is the send method as follows.
 
 ```
 
-After the request is send, the next piece of code will find the handler for the request and run the corresponding
-handler method.
+After the request is send, the next piece of code will find the handler for the request 
+and run the corresponding handler method.
 
 ```C#
 
@@ -184,25 +195,60 @@ private class RequestHandler<TCommand, TResult> : RequestHandler<TResult> where 
 
 ```
 
+## Data area
 
-
-
-
+This is where database operation and structure is created.
 
 ## DataAccess
 
 DataAccess is where data mapping and data queries are done. 
 
-The examples given are EmployeeMap, ExpenseReportFactMap, ExpenseReportMap, ExpenseReportStatusType, ManagerMap.
+The examples given are EmployeeMap, ExpenseReportFactMap, ExpenseReportMap, 
+ExpenseReportStatusType, ManagerMap.
 
 **Handler**
 
-There is where the Bus handler code that deals with database access is stored. Function are furthered encapsulated.
-One example is AddExpenseCommadnHandler which create and updated model and then calls ExpenseReportSaveCommandHandler
+There is where the Bus handler code that deals with database access is stored. 
+Function are furthered encapsulated. One example is AddExpenseCommadnHandler 
+which create and updated model and then calls ExpenseReportSaveCommandHandler
 which saves the model to the database.
 
 ## Database
 
+Database contains scripts which will clear the database of tables and restart 
+the database from a base point. 
+
+
+## UI
+
+This area contains the user interface of the project.
+
+## UI
+
+The UI is organized as a MVC application using Jquery and Bootstrap. 
+There are Account, ExpenseReport, ExpenseReportSearch and Home views. 
+
+Likewise the corresponding controllers contains the server based code that support 
+the view and it's operations.
+
+## UI.DependencyResolution
+
+
+## Test 
+
+This is the area of various tests.
+
+## IntegrationTests
+
+Once database is cleared, integration test will create dummy data and run tests 
+to make sure the application is working
+properly.
+
+## Performance Tests
+
+## SmokeTests
+
+## UnitTests
 
 
 
