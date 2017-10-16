@@ -2,7 +2,7 @@
 
 Clear Measure Bootcamp Projct Preqsets
 
-To work on the Clear Measure Expense Report project you should have the following prerequisite:
+To work on the Clear Measure Expense Report project you should have a basic understanding of the following prerequisite:
 
 Basic knowledge of Visual Studio, C#, MVC, SQL, FluentNHibernate, Selenium, Onion Architecture, 
 Unit testing, Razor Views, Jquery, Bootstrap.
@@ -13,10 +13,10 @@ So lets get started:
 
 The bootcamp project have 4 major sections:
 
-1. Core section - This section contains core project which contains the project objects 
+1. Core section - This section contains core project which contains the project's objects 
 and services.
 
-2. Data section - This section contains DataAccess and Database projects.
+2. Data section - This section contains the DataAccess and Database projects.
 
 3. UI section - This section contains UI.DependencyResolution and UI projects.
 
@@ -30,14 +30,14 @@ Lets look at the projects individually.
 functions.
 
 3. Database Project - Allows the user to reset the database to factory defaults and 
-restart the project from a base line.
+start the project from a base line.
 
 4. IntregrationTests Project - Contains test data and tests of certain core and 
 database functionalities.
 
 5. PerformanceTests Project - Start project performance tests on the Azure platform.
 
-6. SmokeTests Project- Quick test of the integrity of the project using Selenium and
+6. SmokeTests Project- Quick test of the integrity of the project using Selenium on
 various browsers.
 
 7. UI Project - The user interface of the project. Contains applicaiton pages and UI
@@ -50,20 +50,21 @@ functionality.
 Let me just talk briefly about application development in general. The main point of 
 breaking things down to individual parts is to help the user reason about the 
 application in a better way. In application development, the structure needs to be 
-organized and be consistent because the whole is very complex and dense. If that is not
-done then chaos and ineffeicy will very quickly seep into the project and derail progress.
+organized and be consistent because the whole is very complex and difficult to understand. 
+If that is not done then chaos and inefficiency will very quickly seep into the project 
+and derail any progress.
 
-Now we can dive deeper into each project and describe some main concepts, 
+Now we can dive deeper into each project and describe some main concepts.
 
 ## Core Project
 
 Core project consists of 5 main parts:
 
-1. Features -  
+1. Features 
 2. Model
 3. Plugins
 4. Service
-5. Bus, Irequest, IrequestHandler
+5. Bus, IRequest, IRequestHandler
 
 We can discuss them in detail.
 
@@ -126,7 +127,7 @@ It also contains SingleResult and MulipleResult is of TResponse type.
 
 Services are functions that uses models to create function the application uses. Each funciton uses
 an interface and implements them. For example, IApplicationInformation is an interface and 
-ApplicationInformation implements that functionality. Another example is IexpenseReportBuilder, 
+ApplicationInformation implements that functionality. Another example is IExpenseReportBuilder, 
 which is implemented by ExpenseReportBuilder.
 
 **Bus Architecture**
@@ -134,7 +135,7 @@ which is implemented by ExpenseReportBuilder.
 Bus architecture is the heart of how requests are done on the Expense Report application. The 
 architecture have 3 main parts, Bus, IRequest and IRequestHandler. 
 
-The main method to send request is the send method as follows.
+The main method to send request is the send method layed out as follows.
 
 ```C#
 
