@@ -1,10 +1,11 @@
-namespace ClearMeasure.Bootcamp.DataAccessEF.Models
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
+
+namespace ClearMeasure.Bootcamp.DataAccessEF.Model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("ExpenseReport")]
     public partial class ExpenseReport

@@ -2,7 +2,7 @@ using System;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using ClearMeasure.Bootcamp.DataAccessEF.Models;
+using ClearMeasure.Bootcamp.DataAccessEF.Model;
 
 namespace ClearMeasure.Bootcamp.DataAccessEF.Mappings
 {
