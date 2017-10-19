@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessEF
+namespace ClearMeasure.Bootcamp.DataAccessEF.Mappings
 {
-    public class Class1
+    class EmployeeMap
     {
+
     }
 }
