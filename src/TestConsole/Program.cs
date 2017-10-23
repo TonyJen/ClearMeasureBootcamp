@@ -21,13 +21,15 @@ namespace ClearMeasure.Bootcamp.TestCosole
             ReadEmployee();
             SaveEmployee();
             ReadEmployee();
+            Console.ReadLine();
         }
 
         private static void SaveEmployee()
         {
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>().ReverseMap());
-
-            Core.Model.Employee adminAssistant = new Core.Model.Employee("AssistantTemp", "Someone", "Else", "Email2");
+            var random = new Random();
+            var randomNumber = random.Next(0, 1000);
+            Core.Model.Employee adminAssistant = new Core.Model.Employee("AssistantTemp" , "Someone" + randomNumber, "Else", "Email2");
             adminAssistant.Id = Guid.NewGuid();
             var EFEmployee = new DataAccessEF.Model.Employee();
 
@@ -35,7 +37,8 @@ namespace ClearMeasure.Bootcamp.TestCosole
             var _employee =_context.Set<DataAccessEF.Model.Employee>();
             _employee.Add(EFEmployee);
             _context.SaveChanges();
-
+            Console.WriteLine("Created new Employee Someone" + randomNumber);
+            Console.WriteLine();
         }
 
         private static void ReadEmployee()
@@ -47,6 +50,7 @@ namespace ClearMeasure.Bootcamp.TestCosole
                 var model = Mapper.Map<DataAccessEF.Model.Employee, Core.Model.Employee>(emp);
                 Console.WriteLine(emp.FirstName.ToString());
             }
+            Console.WriteLine();
         }
     }
 }
