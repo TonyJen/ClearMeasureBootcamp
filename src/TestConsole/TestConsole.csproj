@@ -53,6 +53,9 @@
     <Reference Include="Mono.Reflection, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Reflection.1.1.0.0\lib\Mono.Reflection.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.5.2\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -64,8 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyRegistrarModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureMapDependencyResolver.cs" />
+    <Compile Include="StructureMapRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +85,10 @@
     <ProjectReference Include="..\DataAccessEF\DataAccessEF.csproj">
       <Project>{bc70f29e-fb1f-400e-b855-e0dc909e8320}</Project>
       <Name>DataAccessEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.DependencyResolution\UI.DependencyResolution.csproj">
+      <Project>{6a0f1b94-dd2b-4d71-ad89-1da01e392cf3}</Project>
+      <Name>UI.DependencyResolution</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

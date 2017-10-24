@@ -2,10 +2,9 @@
 using ClearMeasure.Bootcamp.Core.Features.MutlipleExpenses;
 using ClearMeasure.Bootcamp.Core.Model;
 using ClearMeasure.Bootcamp.Core.Plugins.DataAccess;
-using ClearMeasure.Bootcamp.DataAccess.Mappings;
-using NHibernate;
+using ClearMeasure.Bootcamp.DataAccessEF.Mappings;
 
-namespace ClearMeasure.Bootcamp.DataAccessEF
+namespace ClearMeasure.Bootcamp.DataAccess
 {
     public class AddExpenseCommandHandler : IRequestHandler<AddExpenseCommand, AddExpenseResult>
     {

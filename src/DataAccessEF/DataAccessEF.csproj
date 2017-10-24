@@ -52,7 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\DataMap.cs" />
+    <Compile Include="AddExpenseCommandHandler.cs" />
+    <Compile Include="ExpenseReportSaveCommandHandler.cs" />
     <Compile Include="Model\AuditEntry.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Expense.cs" />

@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClearMeasure.Bootcamp.Core.Plugins.DataAccess;
 using ClearMeasure.Bootcamp.DataAccessEF.Mappings;
 using ClearMeasure.Bootcamp.DataAccessEF.Model;
 using ClearMeasure.Bootcamp.Core.Model;
 using AutoMapper;
+using StructureMap;
+using ClearMeasure.Bootcamp.TestConsole;
+using ClearMeasure.Bootcamp.Core;
 
 namespace ClearMeasure.Bootcamp.TestCosole
 {
@@ -21,6 +25,7 @@ namespace ClearMeasure.Bootcamp.TestCosole
             ReadEmployee();
             SaveEmployee();
             ReadEmployee();
+            SaveReport();
             Console.ReadLine();
         }
 
@@ -51,6 +56,27 @@ namespace ClearMeasure.Bootcamp.TestCosole
                 Console.WriteLine(emp.FirstName.ToString());
             }
             Console.WriteLine();
+        }
+
+        private static void SaveReport()
+        {
+            var creator = new Core.Model.Employee( "1", "1", "1", "1");
+            creator.Id = Guid.NewGuid();
+            var assignee = new Core.Model.Employee("2", "2", "2", "2");
+            assignee.Id = Guid.NewGuid();
+            var report = new Core.Model.ExpenseReport();
+            report.Submitter = creator;
+            report.Approver = assignee;
+            report.Id = Guid.NewGuid();
+            report.Title = "foo";
+            report.Description = "bar";
+            report.ChangeStatus(ExpenseReportStatus.Approved);
+            report.Number = "123";
+            report.AddAuditEntry(new Core.Model.AuditEntry(creator, DateTime.Now, ExpenseReportStatus.Submitted,
+                                                  ExpenseReportStatus.Approved));
+            IContainer container = DependencyRegistrarModule.EnsureDependenciesRegistered();
+            var bus = container.GetInstance<Bus>();
+            bus.Send(new ExpenseReportSaveCommand { ExpenseReport = report });
         }
     }
 }

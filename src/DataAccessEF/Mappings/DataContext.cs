@@ -6,7 +6,7 @@ using ClearMeasure.Bootcamp.DataAccessEF.Model;
 
 namespace ClearMeasure.Bootcamp.DataAccessEF.Mappings
 {
-    public partial class DataContext : DbContext
+    public class DataContext : DbContext
     {
         public DataContext()
             : base("name=DatabaseSetting")
