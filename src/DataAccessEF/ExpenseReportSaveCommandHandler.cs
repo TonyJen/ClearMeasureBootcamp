@@ -19,11 +19,15 @@ namespace ClearMeasure.Bootcamp.DataAccessEF
                     AutoMapper.Mapper.Initialize(cfg => {
                         cfg.CreateMap<DataAccessEF.Model.ExpenseReport, Core.Model.ExpenseReport>().ReverseMap();
                         cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>().ReverseMap();
+                        cfg.CreateMap<DataAccessEF.Model.AuditEntry, Core.Model.AuditEntry>().ReverseMap();
 
                     });
                     var EFExpenseReport = new DataAccessEF.Model.ExpenseReport();
                     var EFSubmitter = new DataAccessEF.Model.Employee();
                     var EFApprover = new DataAccessEF.Model.Employee();
+                    var EFAuditEntry = new DataAccessEF.Model.AuditEntry();
+                    var _AuditEntries = request.ExpenseReport.GetAuditEntries();
+                    var _AuditEntry = request.ExpenseReport.GetAuditEntries()[0];
                     Mapper.Map(request.ExpenseReport, EFExpenseReport);
                     Mapper.Map(request.ExpenseReport.Submitter, EFSubmitter);
                     Mapper.Map(request.ExpenseReport.Approver, EFApprover);
@@ -33,6 +37,16 @@ namespace ClearMeasure.Bootcamp.DataAccessEF
                     _employee.Add(EFApprover);
                     var _expenseReport = session.Set<DataAccessEF.Model.ExpenseReport>();
                     _expenseReport.Add(EFExpenseReport);
+                    var _Audit = session.Set<DataAccessEF.Model.AuditEntry>();
+                    foreach (var AuditEntry in _AuditEntries)
+                    {
+                        Mapper.Map(AuditEntry, EFAuditEntry);
+
+                        EFAuditEntry.BeginStatus = AuditEntry.BeginStatus.Code;
+                        EFAuditEntry.EndStatus = AuditEntry.EndStatus.Code;
+                        EFAuditEntry.ExpenseReportId = EFExpenseReport.Id;
+                        _Audit.Add(EFAuditEntry);
+                    }
                     session.SaveChanges();
                 }
             }
