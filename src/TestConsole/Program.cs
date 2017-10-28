@@ -19,18 +19,60 @@ namespace ClearMeasure.Bootcamp.TestCosole
         private static DataContext _context;
         static void Main(string[] args)
         {
-            
+
             _context = new DataContext();
 
-            ReadEmployee();
-            SaveEmployee();
-            ReadEmployee();
-            SaveReport();
-            Console.ReadLine();
+            // Change to your number of menuitems.
+            const int maxMenuItems = 3;
+            var selector = 0;
+            Console.Title = "Select the follow options:";
+            while (selector != maxMenuItems)
+            {
+                Console.Clear();
+                DrawMenu();
+                bool good = int.TryParse(Console.ReadLine(), out selector);
+                if (good)
+                {
+                    switch (selector)
+                    {
+                        case 1:
+                            SaveReport();
+                            break;
+                        case 2:
+                            ReadEmployee();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    ErrorMessage();
+                }
+
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
+            }
+        }
+
+        private static void DrawMenu()
+        {
+
+            Console.WriteLine(" ----------------------------------------------------------------------------");
+            Console.WriteLine(" 1. Create Expense Report");
+            Console.WriteLine(" 2. Read Employee Table");
+            Console.WriteLine(" 3. Exit");
+
+        }
+
+            private static void ErrorMessage()
+        {
+            Console.WriteLine("Typing error, press key to continue.");
         }
 
         private static void SaveEmployee()
         {
+          
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>().ReverseMap());
             var random = new Random();
             var randomNumber = random.Next(0, 1000);
@@ -48,21 +90,24 @@ namespace ClearMeasure.Bootcamp.TestCosole
 
         private static void ReadEmployee()
         {
+            Console.WriteLine("Employee in Database: ");
+            Console.WriteLine("=======================");
+            Console.WriteLine();
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>());
             var Employee = _context.Employees;
             foreach (var emp in Employee)
             {
                 var model = Mapper.Map<DataAccessEF.Model.Employee, Core.Model.Employee>(emp);
-                Console.WriteLine(emp.FirstName.ToString());
+                Console.WriteLine(emp.UserName.ToString());
             }
             Console.WriteLine();
         }
 
         private static void SaveReport()
         {
-            var creator = new Core.Model.Employee( "1", "1", "1", "1");
+            var creator = new Core.Model.Employee( "User" + new Random().Next(0,100), "User1First", "User1Last", "user1@co.com");
             creator.Id = Guid.NewGuid();
-            var assignee = new Core.Model.Employee("2", "2", "2", "2");
+            var assignee = new Core.Model.Employee("User" + new Random().Next(0, 100), "User2First", "User2Last", "user2@co.com");
             assignee.Id = Guid.NewGuid();
             var report = new Core.Model.ExpenseReport();
             report.Submitter = creator;
@@ -77,6 +122,7 @@ namespace ClearMeasure.Bootcamp.TestCosole
             IContainer container = DependencyRegistrarModule.EnsureDependenciesRegistered();
             var bus = container.GetInstance<Bus>();
             bus.Send(new ExpenseReportSaveCommand { ExpenseReport = report });
+            Console.WriteLine("Report created.");
         }
     }
 }
