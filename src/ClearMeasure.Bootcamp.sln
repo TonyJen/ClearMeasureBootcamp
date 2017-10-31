@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "Perform
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessEF", "DataAccessEF\DataAccessEF.csproj", "{BC70F29E-FB1F-400E-B855-E0DC909E8320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{94BD8662-B89B-4EDE-B745-A5AC2B808C8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFTestConsole", "TestConsole\EFTestConsole.csproj", "{94BD8662-B89B-4EDE-B745-A5AC2B808C8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

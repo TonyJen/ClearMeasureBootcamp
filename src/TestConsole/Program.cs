@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ClearMeasure.Bootcamp.Core.Plugins.DataAccess;
 using ClearMeasure.Bootcamp.DataAccessEF.Mappings;
-using ClearMeasure.Bootcamp.DataAccessEF.Model;
 using ClearMeasure.Bootcamp.Core.Model;
 using AutoMapper;
 using StructureMap;
 using ClearMeasure.Bootcamp.TestConsole;
 using ClearMeasure.Bootcamp.Core;
+using System.Threading;
 
-namespace ClearMeasure.Bootcamp.TestCosole
+namespace ClearMeasure.Bootcamp.EFTestCosole
 {
     class Program
     {
@@ -37,9 +33,13 @@ namespace ClearMeasure.Bootcamp.TestCosole
                     {
                         case 1:
                             SaveReport();
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey();
                             break;
                         case 2:
-                            ReadEmployee();
+                            ReadExpenseEmployees();
+                            Console.WriteLine("Press any key to continue.");
+                            Console.ReadKey();
                             break;
                         default:
                             break;
@@ -49,9 +49,6 @@ namespace ClearMeasure.Bootcamp.TestCosole
                 {
                     ErrorMessage();
                 }
-
-                Console.WriteLine("Press any key to continue.");
-                Console.ReadKey();
             }
         }
 
@@ -70,7 +67,7 @@ namespace ClearMeasure.Bootcamp.TestCosole
             Console.WriteLine("Typing error, press key to continue.");
         }
 
-        private static void SaveEmployee()
+        private static void SaveExpenseEmployees()
         {
           
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>().ReverseMap());
@@ -88,11 +85,16 @@ namespace ClearMeasure.Bootcamp.TestCosole
             Console.WriteLine();
         }
 
-        private static void ReadEmployee()
+        /// <summary>
+        /// Read employee and expense information
+        /// </summary>
+        private static void ReadExpenseEmployees()
         {
-            Console.WriteLine("Employee in Database: ");
+            Console.WriteLine("Values in Database: ");
             Console.WriteLine("=======================");
             Console.WriteLine();
+            Console.WriteLine("Employees: ");
+            Console.WriteLine("=======================");
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>());
             var Employee = _context.Employees;
             foreach (var emp in Employee)
@@ -101,19 +103,30 @@ namespace ClearMeasure.Bootcamp.TestCosole
                 Console.WriteLine(emp.UserName.ToString());
             }
             Console.WriteLine();
+
+            Console.WriteLine("Expense Reports: ");
+            Console.WriteLine("=======================");
+            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.ExpenseReport, Core.Model.ExpenseReport>());
+            var Expenses = _context.ExpenseReports;
+            var _coreexpense = new Core.Model.ExpenseReport();
+            foreach (var _expense in Expenses)
+            {
+                //Mapper.Map(_expense, _coreexpense);
+                Console.WriteLine(_expense.Title.ToString());
+            }
         }
 
         private static void SaveReport()
         {
-            var creator = new Core.Model.Employee( "User" + new Random().Next(0,100), "User1First", "User1Last", "user1@co.com");
+            var creator = new Core.Model.Employee( "User" + StaticRandom.Instance.Next(1, 100), "User1First", "User1Last", "user1@co.com");
             creator.Id = Guid.NewGuid();
-            var assignee = new Core.Model.Employee("User" + new Random().Next(0, 100), "User2First", "User2Last", "user2@co.com");
+            var assignee = new Core.Model.Employee("User" + StaticRandom.Instance.Next(1, 100), "User2First", "User2Last", "user2@co.com");
             assignee.Id = Guid.NewGuid();
             var report = new Core.Model.ExpenseReport();
             report.Submitter = creator;
             report.Approver = assignee;
             report.Id = Guid.NewGuid();
-            report.Title = "foo";
+            report.Title = "foo" + StaticRandom.Instance.Next(1, 100);
             report.Description = "bar";
             report.ChangeStatus(ExpenseReportStatus.Approved);
             report.Number = "123";
@@ -124,5 +137,20 @@ namespace ClearMeasure.Bootcamp.TestCosole
             bus.Send(new ExpenseReportSaveCommand { ExpenseReport = report });
             Console.WriteLine("Report created.");
         }
+    }
+
+    public static class StaticRandom
+    {
+        private static int seed;
+
+        private static ThreadLocal<Random> threadLocal = new ThreadLocal<Random>
+            (() => new Random(Interlocked.Increment(ref seed)));
+
+        static StaticRandom()
+        {
+            seed = Environment.TickCount;
+        }
+
+        public static Random Instance { get { return threadLocal.Value; } }
     }
 }
