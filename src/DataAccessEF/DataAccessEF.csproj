@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -40,6 +37,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -54,12 +52,13 @@
   <ItemGroup>
     <Compile Include="AddExpenseCommandHandler.cs" />
     <Compile Include="ExpenseReportSaveCommandHandler.cs" />
-    <Compile Include="Model\AuditEntry.cs" />
-    <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\Expense.cs" />
-    <Compile Include="Model\ExpenseReport.cs" />
-    <Compile Include="Model\ExpenseReportFact.cs" />
     <Compile Include="Mappings\DataContext.cs" />
+    <Compile Include="Migrations\201711140058362_11-13\2017.cs" />
+    <Compile Include="Migrations\201711140102379_11-13-2017.cs" />
+    <Compile Include="Migrations\201711140102379_11-13-2017.Designer.cs">
+      <DependentUpon>201711140102379_11-13-2017.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,10 +66,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{0649ad4e-44c9-45db-a4a9-322e36520f74}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711140102379_11-13-2017.resx">
+      <DependentUpon>201711140102379_11-13-2017.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

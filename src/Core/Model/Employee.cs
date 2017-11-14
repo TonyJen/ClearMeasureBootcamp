@@ -1,14 +1,38 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClearMeasure.Bootcamp.Core.Model
 {
     public class Employee : IComparable<Employee>
     {
+
         public Guid Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string UserName { get; set; }
+
+        [Required]
+        [StringLength(25)]
         public string FirstName { get; set; }
-        public string LastName { get; set; } 
+
+        [Required]
+        [StringLength(25)]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string EmailAddress { get; set; }
+
+        [StringLength(100)]
+        public string Type { get; set; }
+
+        public Guid? AdminAssistantId { get; set; }
+
+        public virtual ICollection<ExpenseReport> ExpenseReports { get; set; }
+        
 
         public Employee()
         {

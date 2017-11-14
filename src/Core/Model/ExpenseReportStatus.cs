@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClearMeasure.Bootcamp.Core.Model
 {
+    [NotMapped]
 	public class ExpenseReportStatus
 	{
 		public static readonly ExpenseReportStatus None = new ExpenseReportStatus("", "", " ", 0);

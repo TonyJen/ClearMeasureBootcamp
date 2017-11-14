@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace ClearMeasure.Bootcamp.Core.Model
@@ -8,12 +10,32 @@ namespace ClearMeasure.Bootcamp.Core.Model
     {
         public IList<AuditEntry> _auditEntries = new List<AuditEntry>();
         public IList<Expense> _expenses = new List<Expense>();
+
         public Guid Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
         public string Title { get; set; }
+
+        [Required]
+        [StringLength(4000)]
         public string Description { get; set; }
+
+        [Required]
+        [StringLength(3)]
         public ExpenseReportStatus Status { get; set; }
+
+
+        public Guid SubmitterId { get; set; }
+        
+        public Guid? ApproverId { get; set; }
+
         public Employee Submitter { get; set; }
+
         public Employee Approver { get; set; }
+
+        [Required]
+        [StringLength(5)]
         public string Number { get; set; }
         // New Properties
         public int MilesDriven { get; set; }
@@ -24,6 +46,8 @@ namespace ClearMeasure.Bootcamp.Core.Model
         public DateTime? LastCancelled { get; set; }
         public DateTime? LastApproved { get; set; }
         public DateTime? LastDeclined { get; set; }
+
+        [Column(TypeName = "money")]
         public decimal Total { get; set; }
 
         public ExpenseReport()

@@ -22,6 +22,9 @@ namespace ClearMeasure.Bootcamp.Core.Model
         public virtual string EmployeeName { get; set; }
         public virtual ExpenseReportStatus BeginStatus { get; set; }
         public virtual ExpenseReportStatus EndStatus { get; set; }
-        
+        public Guid ExpenseReportId { get; set; }
+        public int Sequence { get; set; }
+        public Guid? EmployeeId { get; set; }
+
     }
 }

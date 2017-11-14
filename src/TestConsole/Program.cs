@@ -2,7 +2,6 @@
 using ClearMeasure.Bootcamp.Core.Plugins.DataAccess;
 using ClearMeasure.Bootcamp.DataAccessEF.Mappings;
 using ClearMeasure.Bootcamp.Core.Model;
-using AutoMapper;
 using StructureMap;
 using ClearMeasure.Bootcamp.TestConsole;
 using ClearMeasure.Bootcamp.Core;
@@ -70,15 +69,13 @@ namespace ClearMeasure.Bootcamp.EFTestCosole
         private static void SaveExpenseEmployees()
         {
           
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>().ReverseMap());
-            var random = new Random();
+                      var random = new Random();
             var randomNumber = random.Next(0, 1000);
             Core.Model.Employee adminAssistant = new Core.Model.Employee("AssistantTemp" , "Someone" + randomNumber, "Else", "Email2");
             adminAssistant.Id = Guid.NewGuid();
-            var EFEmployee = new DataAccessEF.Model.Employee();
-
-            Mapper.Map(adminAssistant, EFEmployee);
-            var _employee =_context.Set<DataAccessEF.Model.Employee>();
+            var EFEmployee = new Employee();
+            
+            var _employee =_context.Set<Employee>();
             _employee.Add(EFEmployee);
             _context.SaveChanges();
             Console.WriteLine("Created new Employee Someone" + randomNumber);
@@ -95,25 +92,23 @@ namespace ClearMeasure.Bootcamp.EFTestCosole
             Console.WriteLine();
             Console.WriteLine("Employees: ");
             Console.WriteLine("=======================");
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.Employee, Core.Model.Employee>());
             var Employee = _context.Employees;
             foreach (var emp in Employee)
             {
-                var model = Mapper.Map<DataAccessEF.Model.Employee, Core.Model.Employee>(emp);
                 Console.WriteLine(emp.UserName.ToString());
             }
             Console.WriteLine();
 
             Console.WriteLine("Expense Reports: ");
             Console.WriteLine("=======================");
-            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<DataAccessEF.Model.ExpenseReport, Core.Model.ExpenseReport>());
-            var Expenses = _context.ExpenseReports;
-            var _coreexpense = new Core.Model.ExpenseReport();
-            foreach (var _expense in Expenses)
-            {
-                //Mapper.Map(_expense, _coreexpense);
-                Console.WriteLine(_expense.Title.ToString());
-            }
+            //var Expenses = _context.ExpenseReports;
+            //var _coreexpense = new Core.Model.ExpenseReport();
+            //foreach (var _expense in Expenses)
+            //{
+            //    // Need more advanced mapping, current method does not work.
+            //    //Mapper.Map(_expense, _coreexpense);
+            //    Console.WriteLine(_expense.Title.ToString());
+            //}
         }
 
         private static void SaveReport()
